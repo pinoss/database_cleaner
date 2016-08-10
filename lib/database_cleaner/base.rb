@@ -113,6 +113,8 @@ module DatabaseCleaner
         :mongoid
       elsif defined? ::CouchPotato
         :couch_potato
+      elsif defined? ::CouchRest::Model
+        :couchrest_model
       elsif defined? ::Sequel
         :sequel
       elsif defined? ::Moped
@@ -147,14 +149,14 @@ module DatabaseCleaner
       @autodetected = true
 
       @orm ||= autodetect_orm ||
-               raise(NoORMDetected, "No known ORM was detected!  Is ActiveRecord, DataMapper, Sequel, MongoMapper, Mongoid, Moped, or CouchPotato, Redis or Ohm loaded?")
+               raise(NoORMDetected, "No known ORM was detected!  Is ActiveRecord, DataMapper, Sequel, MongoMapper, Mongoid, Moped, or CouchPotato, CouchRest::Model, Redis or Ohm loaded?")
     end
 
     def set_default_orm_strategy
       case orm
       when :active_record, :data_mapper, :sequel
         self.strategy = :transaction
-      when :mongo_mapper, :mongoid, :couch_potato, :moped, :ohm, :redis
+      when :mongo_mapper, :mongoid, :couch_potato, :couchrest_model, :moped, :ohm, :redis
         self.strategy = :truncation
       when :neo4j
         self.strategy = :transaction

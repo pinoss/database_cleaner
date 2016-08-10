@@ -19,7 +19,7 @@ end
 
 ## Supported Databases, Libraries and Strategies
 
-ActiveRecord, DataMapper, Sequel, MongoMapper, Mongoid, CouchPotato, Ohm and Redis are supported.
+ActiveRecord, DataMapper, Sequel, MongoMapper, Mongoid, CouchPotato, CouchRestModel, Ohm and Redis are supported.
 
 Here is an overview of the strategies supported for each library:
 
@@ -45,6 +45,12 @@ Here is an overview of the strategies supported for each library:
     </tr>
     <tr>
       <td> CouchPotato</td>
+      <td> <b>Yes</b></td>
+      <td> No</td>
+      <td> No</td>
+    </tr>
+    <tr>
+      <td> CouchRestModel</td>
       <td> <b>Yes</b></td>
       <td> No</td>
       <td> No</td>
@@ -284,7 +290,7 @@ RSpec.configure do |config|
       MSG
     end
     DatabaseCleaner.clean_with(:truncation)
-  end  
+  end
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
@@ -482,7 +488,7 @@ For ActiveRecord, you add the following parameter in your database.yml file:
 test:
   adapter: postgresql
   # ...
-  min_messages: WARNING  
+  min_messages: WARNING
 </pre>
 
 ### Nothing happens in JRuby with Sequel using transactions
