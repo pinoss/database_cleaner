@@ -15,13 +15,14 @@ module DatabaseCleaner
       end
 
       def clean
-        models.each do |model|
-          doc_ids = model.all.rows.map { |doc| doc['id'] }
-          model.database.bulk_delete(doc_ids)
-        end
+        models.each { |model| model.database.bulk_delete(document_bundle(model)) }
       end
 
       private
+
+      def document_bundle(model)
+        model.all.map { |doc| { _id: doc['_id'], _rev: doc['_rev'], _deleted: true } }
+      end
 
       def models
         ::CouchRest::Model::Base.subclasses
